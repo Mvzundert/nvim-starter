@@ -30,13 +30,13 @@ if ! command -v nvim &>/dev/null; then
   exit 1
 fi
 
-# ── Check Neovim version (>= 0.11 required for vim.pack.add) ─────────────────
-nvim_version=$(nvim --version | head -1 | grep -oE '[0-9]+\.[0-9]+' || echo "0.0")
+# ── Check Neovim version (>= 0.12 required for vim.pack.add and native treesitter) ─────────────────
+nvim_version=$(nvim --version | head -1 | grep -oP '[0-9]+\.[0-9]+' || echo "0.0")
 major=$(echo "$nvim_version" | cut -d. -f1)
 minor=$(echo "$nvim_version" | cut -d. -f2)
 
-if [ "$major" -lt 0 ] 2>/dev/null || { [ "$major" -eq 0 ] && [ "$minor" -lt 11 ]; }; then
-  echo -e "${RED}Neovim >= 0.11 required.${RESET} You have $nvim_version."
+if [ "$major" -lt 0 ] 2>/dev/null || { [ "$major" -eq 0 ] && [ "$minor" -lt 12 ]; }; then
+  echo -e "${RED}Neovim >= 0.12 required.${RESET} You have $nvim_version."
   echo "Update: https://github.com/neovim/neovim/releases"
   exit 1
 fi
