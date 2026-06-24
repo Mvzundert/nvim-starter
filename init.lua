@@ -26,6 +26,7 @@ vim.pack.add({
   { src = 'https://github.com/williamboman/mason-lspconfig.nvim', name = 'mason-lspconfig.nvim' },
   { src = 'https://github.com/neovim/nvim-lspconfig', name = 'nvim-lspconfig' },
   { src = 'https://github.com/saghen/blink.cmp', name = 'blink.cmp' },
+  { src = 'https://github.com/saghen/blink.lib', name = 'blink.lib' },
   { src = 'https://github.com/lewis6991/gitsigns.nvim', name = 'gitsigns.nvim' },
 }, { confirm = false })
 
