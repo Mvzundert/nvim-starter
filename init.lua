@@ -108,7 +108,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Flash yanked text",
 	group = vim.api.nvim_create_augroup("starter-yank", { clear = true }),
 	callback = function()
-		vim.hl.hl_op()
+		vim.highlight.on_yank()
 	end,
 })
 
