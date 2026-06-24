@@ -20,6 +20,7 @@ vim.g.maplocalleader = ' '
 -- 2 ─ Plugins (auto-installed by Neovim's built-in vim.pack.add) ─────────────
 vim.pack.add({
   { src = 'https://github.com/folke/tokyonight.nvim', name = 'tokyonight.nvim' },
+  { src = 'https://github.com/ellisonleao/gruvbox.nvim', name = 'gruvbox.nvim' },
   { src = 'https://github.com/folke/which-key.nvim', name = 'which-key.nvim' },
   { src = 'https://github.com/folke/snacks.nvim', name = 'snacks.nvim' },
   { src = 'https://github.com/williamboman/mason.nvim', name = 'mason.nvim' },
@@ -33,6 +34,10 @@ vim.pack.add({
 -- 3 ─ Colorscheme ────────────────────────────────────────────────────────────
 -- If icons look broken or missing, install a Nerd Font: https://www.nerdfonts.com/
 vim.cmd.colorscheme('tokyonight')
+
+-- gruvbox
+-- vim.cmd.colorscheme('gruvbox')
+
 
 -- 4 ─ Options ────────────────────────────────────────────────────────────────
 vim.opt.number = true                  -- line numbers
