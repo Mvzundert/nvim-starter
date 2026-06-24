@@ -8,12 +8,15 @@
 -- =============================================================================
 
 -- Common first tweaks (lines to edit when you're ready to personalize):
---   Line  49 — colorscheme:        change 'tokyonight' to another theme
---   Line  59 — indent size:        change shiftwidth/tabstop from 2 to 4
---   Line  23 — plugins:            add or remove entries in vim.pack.add()
+--   Line  55 — colorscheme:        change 'tokyonight' to another theme
+--   Line  65 — indent size:        change shiftwidth/tabstop from 2 to 4
+--   Line  25 — plugins:            add or remove entries in vim.pack.add()
 --
 -- The fallback indent (2 spaces) is overridden per-file by guess-indent.nvim
 -- which auto-detects the project's indentation. Adjust both values together.
+
+-- 0 ─ Loader (faster startup) ────────────────────────────────────────────────
+vim.loader.enable()
 
 -- 1 ─ Leader keys ────────────────────────────────────────────────────────────
 vim.g.mapleader = ' '
@@ -33,6 +36,18 @@ vim.pack.add({
   { src = 'https://github.com/NMAC427/guess-indent.nvim', name = 'guess-indent.nvim' },
   { src = 'https://github.com/L3MON4D3/LuaSnip', name = 'LuaSnip', version = vim.version.range '2.*' },
 }, { confirm = false })
+
+-- Build hook: LuaSnip needs 'make install_jsregexp' for advanced snippet transforms
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name = ev.data.spec.name
+    local kind = ev.data.kind
+    if kind ~= 'install' and kind ~= 'update' then return end
+    if name == 'LuaSnip' and vim.fn.has('win32') ~= 1 and vim.fn.executable('make') == 1 then
+      vim.system({ 'make', 'install_jsregexp' }, { cwd = ev.data.path }):wait()
+    end
+  end,
+})
 
 -- 3 ─ Which-key: keymap popup after pressing <Space> ─────────────────────────
 require('which-key').setup({
@@ -68,6 +83,8 @@ vim.opt.confirm = true                 -- dialog on unsaved changes instead of e
 vim.opt.inccommand = 'split'           -- live preview of :s substitutions
 vim.opt.updatetime = 250               -- faster LSP diagnostics
 vim.opt.timeoutlen = 300               -- faster which-key popup
+vim.opt.showmode = false               -- already shown in the statusline
+vim.opt.breakindent = true             -- wrapped lines keep their indentation
 vim.opt.wrap = false                   -- no line wrapping in code
 
 -- Persistent undo history — files accumulate in ~/.local/state/nvim/undo/
@@ -113,6 +130,18 @@ vim.keymap.set('n', '<leader>sg', function()
   Snacks.picker.grep()
 end, { desc = '[S]earch [G]rep' })
 
+vim.keymap.set('n', '<leader>sh', function()
+  Snacks.picker.help()
+end, { desc = '[S]earch [H]elp' })
+
+vim.keymap.set('n', '<leader>sk', function()
+  Snacks.picker.keymaps()
+end, { desc = '[S]earch [K]eymaps' })
+
+vim.keymap.set('n', '<leader>s.', function()
+  Snacks.picker.recent()
+end, { desc = '[S]earch recent files ("." for repeat)' })
+
 -- Buffers
 vim.keymap.set('n', '<leader>bb', function()
   Snacks.picker.buffers()
@@ -122,6 +151,9 @@ end, { desc = '[B]uffer [B]rowse' })
 vim.keymap.set('n', '<leader>tt', function()
   Snacks.terminal()
 end, { desc = '[T]erminal [T]oggle' })
+
+-- Exit terminal mode (easier for beginners than <C-\><C-n>)
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Config / Mason
 vim.keymap.set('n', '<leader>cm', '<cmd>Mason<CR>', { desc = '[C]heck [M]ason (install LSPs)' })
@@ -151,6 +183,7 @@ vim.keymap.set('v', '>', '>gv')
 -- 8 ─ LSP: Language Server Protocol ──────────────────────────────────────────
 -- 9 ─ Diagnostics: better error display ──────────────────────────────────────
 vim.diagnostic.config {
+  update_in_insert = false,         -- less visual noise while typing
   severity_sort = true,
   float = {
     border = 'rounded',
@@ -240,6 +273,7 @@ require('blink.cmp').setup({
     menu = { border = 'rounded' },
     documentation = { window = { border = 'rounded' }, auto_show = true },
   },
+  signature = { enabled = true },
 })
 
 -- 11 ─ Gitsigns: git change indicators in the gutter ─────────────────────────
