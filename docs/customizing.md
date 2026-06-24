@@ -10,7 +10,7 @@ pointing you to the 3 most common changes. Start there.
 
 ## Change the colorscheme
 
-The colorscheme is set on line 34:
+The colorscheme is set on line 49:
 
 ```lua
 vim.cmd.colorscheme('tokyonight')
@@ -29,7 +29,7 @@ require('tokyonight').setup({ style = 'storm' })  -- 'night', 'day', 'moon'
 
 ## Change indent size
 
-Lines 44-45 control how wide indentation is:
+Lines 59-60 control how wide indentation is:
 
 ```lua
 vim.opt.shiftwidth = 4   -- indent width
@@ -43,7 +43,7 @@ Set both to the same number (2, 4, or 8 are common).
 ## Add files to search ignore
 
 By default, the fuzzy finder searches everything. To skip certain paths, add
-them to the Snacks picker config in section 11:
+them to the Snacks picker config in section 15:
 
 ```lua
 require('snacks').setup({
@@ -67,7 +67,7 @@ projects to exclude `node_modules`, `.venv`, etc.
 
 ## Add LSP keybindings
 
-Section 7 (line 97) defines keymaps that activate when a language server
+Section 10 (line 156) defines keymaps that activate when a language server
 attaches. Add more inside the `map()` calls:
 
 ```lua
@@ -82,7 +82,7 @@ Every built-in LSP function is documented at `:help lsp-buf`.
 
 ## Add plugins
 
-Add entries to the `vim.pack.add()` list (line 21):
+Add entries to the `vim.pack.add()` list (line 23):
 
 ```lua
 { src = 'https://github.com/nvim-neo-tree/neo-tree.nvim', name = 'neo-tree.nvim' },
@@ -91,7 +91,7 @@ Add entries to the `vim.pack.add()` list (line 21):
 Then configure the plugin in a new section at the bottom:
 
 ```lua
--- 12 ─ Neo-tree: file explorer ───────────────────────────────────
+-- 17 ─ Neo-tree: file explorer ───────────────────────────────────
 require('neo-tree').setup({
   window = { position = 'right' },
 })
@@ -115,9 +115,9 @@ history but won't load.
 
 ## Understanding the file
 
-`init.lua` is organized in numbered sections (1 through 11). Each section starts
+`init.lua` is organized in numbered sections (1 through 16). Each section starts
 with a comment header and a brief explanation. The `vim.pack.add()` at the top
 tells Neovim to auto-clone and load plugins. Everything below it is options,
 keymaps, and plugin configuration — in that order.
 
-Read it top to bottom once. It's 179 lines of commented Lua.
+Read it top to bottom once. It's 265 lines of commented Lua.

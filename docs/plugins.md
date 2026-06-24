@@ -104,8 +104,8 @@ complete for-loop).
 |---|---|
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | `{ src = 'https://github.com/L3MON4D3/LuaSnip', name = 'LuaSnip' }` |
 
-The starter config's blink.cmp already has `'snippets'` in its sources list. Once
-LuaSnip is installed, snippets appear automatically in completion.
+The starter config's blink.cmp already has `'snippets'` in its sources list and
+LuaSnip is included by default. Snippets appear automatically in completion.
 
 ---
 
