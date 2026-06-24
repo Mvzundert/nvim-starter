@@ -18,25 +18,28 @@ plugin on next launch — no extra commands needed.
 
 ## File tree
 
-See your project in a sidebar.
+A file tree sidebar is already built-in via Snacks explorer — press `<leader>e`
+to toggle it. If you prefer a different workflow, add one of the plugins below.
 
 | Plugin | `vim.pack.add()` entry |
 |---|---|
-| [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) | `{ src = 'https://github.com/nvim-neo-tree/neo-tree.nvim', name = 'neo-tree.nvim' }` |
 | [oil.nvim](https://github.com/stevearc/oil.nvim) | `{ src = 'https://github.com/stevearc/oil.nvim', name = 'oil.nvim' }` |
 
-*neo-tree* is a traditional file tree sidebar. *oil* turns directories into
-editable buffers — you rename, delete, and move files like text.
+*oil* turns directories into editable buffers — you rename, delete, and move
+files like text.
 
-Setup example for neo-tree:
+Setup example:
 
 ```lua
-require('neo-tree').setup({
-  window = { position = 'right' },
+require("oil").setup({
+  default_file_explorer = true,
+  keymaps = {
+    ["<C-p>"] = false,   -- avoid conflict with blink.cmp
+    ["<leader>e"] = false, -- avoid conflict with Snacks explorer
+  },
 })
 
--- keymap to toggle it
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<CR>', { desc = 'Toggle file tree' })
+vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory (oil)" })
 ```
 
 ---
