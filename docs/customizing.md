@@ -10,7 +10,7 @@ pointing you to the 3 most common changes. Start there.
 
 ## Change the colorscheme
 
-The colorscheme is set on line 64:
+The colorscheme is set on line 68:
 
 ```lua
 vim.cmd.colorscheme('tokyonight')
@@ -29,7 +29,7 @@ require('tokyonight').setup({ style = 'storm' })  -- 'night', 'day', 'moon'
 
 ## Change indent size
 
-Lines 74-75 control how wide indentation is:
+Lines 78-79 control how wide indentation is:
 
 ```lua
 vim.opt.shiftwidth = 4   -- indent width
@@ -67,7 +67,7 @@ projects to exclude `node_modules`, `.venv`, etc.
 
 ## Add LSP keybindings
 
-Section 10 (line 191) defines keymaps that activate when a language server
+Section 10 (line 192) defines keymaps that activate when a language server
 attaches. Add more inside the `map()` calls:
 
 ```lua
@@ -121,4 +121,4 @@ tells Neovim to auto-clone and load plugins. A `PackChanged` build hook compiles
 LuaSnip's regex engine after install. Everything below is options, keymaps, and
 plugin configuration — in that order.
 
-Read it top to bottom once. It's 299 lines of commented Lua — about 10 minutes.
+Read it top to bottom once. It's 308 lines of commented Lua — about 10 minutes.
