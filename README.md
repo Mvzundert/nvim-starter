@@ -17,7 +17,7 @@ thoroughly commented code, and a curated set of keybindings to get productive qu
 | Git change markers in the gutter | gitsigns.nvim |
 | Auto-detect project indentation | guess-indent.nvim |
 | Better syntax highlighting (C, Lua, Markdown, …) | built-in treesitter |
-| Format buffer via LSP | built-in LSP (`<leader>f`)
+| Format buffer via LSP | built-in LSP (`<leader>f`) |
 
 Everything is in one file. Read it, understand it, then tweak it.
 
@@ -114,7 +114,18 @@ diagnostics. They must be installed separately — one per language.
    - Use `/` to search (e.g. `/pyright` for Python)
    - Press `i` on the server you want to install
 4. Press `q` to close Mason
-5. Reopen your file — the LSP attaches automatically
+5. Reopen your file — the LSP attaches automatically (auto-complete, go-to-definition, diagnostics, and hover docs all work)
+
+**How it works:** `mason-lspconfig` detects installed servers and auto-enables
+them via Neovim's built-in `vim.lsp.enable()`. You don't need to write
+per-server config blocks — `automatic_enable = true` wires everything up.
+
+**Completion:** blink.cmp shows suggestions as you type. Press `<C-Space>` to
+force the menu open. `<C-n>` / `<C-p>` cycle, `<C-y>` accepts, `<Tab>` jumps
+between snippet placeholders.
+
+**To verify:** run `:checkhealth vim.lsp` inside Neovim. It lists every running
+language server and which buffers they're attached to.
 
 See [Language Servers](docs/lsp-servers.md) for a full list of recommended servers per language (Python, Rust, Go, JS/TS, Lua, and more). Confirm it's working → [Verifying LSP works](docs/verify.md).
 
@@ -180,6 +191,17 @@ See [Language Servers](docs/lsp-servers.md) for a full list of recommended serve
 | `[d` / `]d` | Previous / next diagnostic |
 | `<Space>rn` | Rename symbol |
 | `<Space>ca` | Code actions (quick-fix menu) |
+
+### Completion (blink.cmp)
+
+| Keys | Action |
+|---|---|
+| Type text | Auto-complete appears as you type |
+| `<C-Space>` | Manually open completion menu |
+| `<C-n>` / `<C-p>` | Next / previous suggestion |
+| `<C-y>` | Accept suggestion |
+| `<Tab>` | Jump to next snippet placeholder |
+| `<S-Tab>` | Previous snippet placeholder |
 
 ### Vim built-ins (always available)
 
