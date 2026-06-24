@@ -198,6 +198,22 @@ vim.diagnostic.config({
 })
 
 -- 10 ─ LSP: Language Server Protocol ─────────────────────────────────────────
+--
+-- Language servers power go-to-definition, hover docs, diagnostics, code
+-- actions, and auto-completion. The flow:
+--
+--   Mason (install LS binaries via :Mason UI)
+--     → mason-lspconfig (detects installed servers, calls vim.lsp.enable)
+--       → Neovim built-in LSP client (vim.lsp.*)
+--         → blink.cmp (surfaces LSP results as completion popup)
+--
+-- Run :checkhealth vim.lsp to see which servers are running and which
+-- buffers they're attached to. (Neovim ≥0.12 removed :LspInfo; use
+-- :checkhealth as the equivalent.)
+--
+-- The LspAttach autocmd below fires each time a server connects to a
+-- buffer. It sets up keymaps (gd, gr, K, rename, code actions) and
+-- document-highlighting on cursor hold.
 
 -- Auto-attach keymaps and features when an LSP server connects to a buffer
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -207,13 +223,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 		end
 
-		map("gd", vim.lsp.buf.definition, "Goto Definition")
-		map("gr", vim.lsp.buf.references, "Goto References")
+		map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+		map("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
 		map("K", vim.lsp.buf.hover, "Hover Documentation")
 		map("[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
 		map("]d", vim.diagnostic.goto_next, "Next Diagnostic")
-		map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-		map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+		map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame Symbol")
+		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
 		-- Highlight references on cursor hold
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -230,26 +246,56 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- Merge blink.cmp capabilities into all LSP servers
+-- Merge blink.cmp capabilities into all LSP server configs.
+-- Without this, blink.cmp can't read completion, signature-help, or
+-- snippet results from the LSP server.
 vim.lsp.config("*", {
 	capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
--- 11 ─ Mason: install language servers with a UI ─────────────────────────────
+-- 11 ─ Mason: install and auto-configure language servers ────────────────────
+--
+-- Mason provides a UI (:Mason) to browse and install language servers,
+-- formatters, linters, and debug adapters. It downloads binaries into
+-- ~/.local/share/nvim/mason/ and manages them.
+--
+-- mason-lspconfig bridges Mason to Neovim's built-in LSP client. Whenever
+-- you install a server through Mason, mason-lspconfig auto-enables it
+-- (automatic_enable = true) so it starts the next time you open a matching
+-- file. No per-server setup blocks needed.
+--
+-- To install a server, press <Space>cm to open the :Mason UI, press 2 for
+-- LSP servers, search, and press i. Restart Neovim — the server attaches
+-- automatically.
+--
+-- For per-server overrides (e.g. root_dir, extra settings), add a
+-- vim.lsp.config("server_name", {...}) block BEFORE this setup call.
+-- See docs/customizing.md.
+
 require("mason").setup()
 
--- Auto-configure servers installed through Mason using nvim-lspconfig
 require("mason-lspconfig").setup({
-	automatic_installation = false, -- install servers manually via :Mason
+	automatic_enable = true, -- auto-start every installed server (Neovim ≥0.11)
 })
 
 -- 12 ─ LuaSnip: snippet engine (powers the 'snippets' source in blink.cmp) ──
 require("luasnip").setup({})
 
 -- 13 ─ blink.cmp: auto-completion ────────────────────────────────────────────
+--
+-- blink.cmp replaces the older nvim-cmp. Sources (in priority order):
+--   lsp       — language server results (the main source)
+--   path      — filesystem paths
+--   snippets  — LuaSnip snippets
+--   buffer    — words already in the current buffer
+--
+-- Completion appears automatically as you type. Press <C-Space> to
+-- manually open the menu. <C-y> accepts; <C-n>/<C-p> cycle through
+-- suggestions; <Tab> jumps between snippet placeholders.
 require("blink.cmp").setup({
 	keymap = {
 		preset = "none",
+		["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
 		["<C-y>"] = { "select_and_accept" },
 		["<C-p>"] = { "select_prev", "fallback" },
 		["<C-n>"] = { "select_next", "fallback" },
