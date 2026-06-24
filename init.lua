@@ -8,7 +8,7 @@
 -- =============================================================================
 
 -- Common first tweaks (lines to edit when you're ready to personalize):
---   Line  55 — colorscheme:        change 'tokyonight' to another theme
+--   Line  72 — colorscheme:        swap 'tokyonight' for 'gruvbox' (or your own)
 --   Line  65 — indent size:        change shiftwidth/tabstop from 2 to 4
 --   Line  25 — plugins:            add or remove entries in vim.pack.add()
 --
@@ -25,7 +25,8 @@ vim.g.maplocalleader = " "
 -- 2 ─ Plugins (auto-installed by Neovim's built-in vim.pack.add) ─────────────
 vim.pack.add({
 	{ src = "https://github.com/folke/tokyonight.nvim", name = "tokyonight.nvim" },
-  { src = 'https://github.com/ellisonleao/gruvbox.nvim', name = 'gruvbox.nvim' },
+-- alternative theme — see colorscheme section below
+-- { src = 'https://github.com/ellisonleao/gruvbox.nvim', name = 'gruvbox.nvim' },
 	{ src = "https://github.com/folke/which-key.nvim", name = "which-key.nvim" },
 	{ src = "https://github.com/folke/snacks.nvim", name = "snacks.nvim" },
 	{ src = "https://github.com/williamboman/mason.nvim", name = "mason.nvim" },
@@ -66,10 +67,9 @@ require("which-key").setup({
 
 -- 4 ─ Colorscheme ────────────────────────────────────────────────────────────
 -- If icons look broken or missing, install a Nerd Font: https://www.nerdfonts.com/
+-- Only one colorscheme at a time — the last uncommented line wins.
 vim.cmd.colorscheme("tokyonight")
-
--- gruvbox
--- vim.cmd.colorscheme('gruvbox')
+-- vim.cmd.colorscheme("gruvbox")
 
 -- 5 ─ Options ────────────────────────────────────────────────────────────────
 vim.opt.number = true -- line numbers
