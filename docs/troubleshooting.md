@@ -67,6 +67,48 @@ rm -rf ~/.local/share/nvim/site/pack/
 
 Launch Neovim again — plugins re-clone automatically on first start.
 
+## Language server not starting or not attaching
+
+If you installed a language server in Mason but `:checkhealth vim.lsp` shows
+"no clients":
+
+1. **Restart Neovim.** `mason-lspconfig` auto-enables servers at startup. A
+   server installed mid-session won't attach until Neovim restarts.
+2. **Open a file of the right type.** LSP servers attach only to buffers
+   whose filetype they recognize (e.g., `intelephense` attaches to `.php`
+   files). Run `:set ft?` to confirm the filetype.
+3. **Check for errors.** Run `:messages` and look for lines mentioning the
+   server name or `vim.lsp`. A crash or missing dependency shows up here.
+4. **Reinstall the server.** Open `:Mason`, press `X` on the server to
+   uninstall, then `i` to reinstall. Restart Neovim.
+
+## Auto-complete doesn't appear despite LSP running
+
+If `:checkhealth vim.lsp` shows a server attached but completion never
+triggers:
+
+1. **Check blink.cmp loaded:** `:lua print(vim.inspect(require("blink.cmp")))`
+   should print its config table. If you get an error, blink.cmp failed to
+   load — check `:messages` for the error.
+2. **Check capability wiring:** Completion requires the LSP server to receive
+   completion capabilities during initialization. The starter config merges
+   blink.cmp's capabilities via `vim.lsp.config("*")`. If you've overridden
+   `vim.lsp.config` for a specific server elsewhere, ensure you merge rather
+   than replace the `capabilities` field.
+3. **Check completion sources:** blink.cmp uses four sources by default:
+   `lsp`, `path`, `snippets`, `buffer`. If only LSP is failing, path
+   completions (filenames) should still appear. If *nothing* appears, blink.cmp
+   itself is likely not running.
+4. **Language server startup time:** Some servers (e.g. `rust-analyzer`,
+   `jdtls`) take several seconds to index a project. Completion won't appear
+   until indexing finishes. Watch the statusline or run
+   `:checkhealth vim.lsp` to see if the server has a "running" or
+   "initialized" status.
+5. **File type detection:** Run `:set ft?` to confirm the file type is
+   detected. If it shows an unexpected value, the LSP server for your
+   language won't attach. Use `:set ft=python` (or your language) to
+   force it temporarily.
+
 ## Still stuck?
 
 Open a [GitHub Discussion](https://github.com/Mvzundert/nvim-starter/discussions).

@@ -67,8 +67,8 @@ projects to exclude `node_modules`, `.venv`, etc.
 
 ## Add LSP keybindings
 
-Section 10 (line 192) defines keymaps that activate when a language server
-attaches. Add more inside the `map()` calls:
+Section 10 (LSP) defines keymaps that activate when a language server attaches.
+Add more inside the `map()` calls:
 
 ```lua
 map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
@@ -77,6 +77,27 @@ map('<leader>wa', vim.lsp.buf.add_workspace_folder, 'Add Workspace Folder')
 ```
 
 Every built-in LSP function is documented at `:help lsp-buf`.
+
+### Add per-server LSP settings
+
+For server-specific overrides (e.g. Lua globals, Python venv path), add a
+`vim.lsp.config()` block **before** the `mason-lspconfig` setup. The server
+config is picked up when `mason-lspconfig` auto-enables it:
+
+```lua
+-- Place this ABOVE require("mason-lspconfig").setup(...)
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      diagnostics = { globals = { "vim" } },
+    },
+  },
+})
+```
+
+For servers with more complex needs (root directory patterns, init options),
+use `vim.lsp.config()` with the full configuration table. See
+`:help vim.lsp.config` for all available options.
 
 ---
 
