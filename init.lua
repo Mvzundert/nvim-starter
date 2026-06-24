@@ -141,6 +141,10 @@ vim.keymap.set("n", "<leader>bb", function()
 end, { desc = "[B]uffer [B]rowse" })
 
 -- Toggle
+vim.keymap.set("n", "<leader>e", function()
+	Snacks.explorer()
+end, { desc = "[E]xplorer (file tree)" })
+
 vim.keymap.set("n", "<leader>tt", function()
 	Snacks.terminal()
 end, { desc = "[T]erminal [T]oggle" })
@@ -269,6 +273,7 @@ require("gitsigns").setup()
 
 -- 15 ─ Snacks: fuzzy finder, terminal, UI polish ─────────────────────────────
 require("snacks").setup({
+	explorer = { enabled = true },
 	terminal = { enabled = true },
 	picker = {
 		matcher = {
