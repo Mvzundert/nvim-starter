@@ -25,7 +25,7 @@ The `unnamedplus` clipboard option requires a clipboard provider.
 ## `jk` doesn't escape Insert mode
 
 The timeout may be too fast. Try pressing `j` then `k` within 300ms — the
-timeout is set on line 54. If it still fails, check that you haven't remapped
+timeout is set on line 84. If it still fails, check that you haven't remapped
 `j` or `k` elsewhere.
 
 ## Icons look broken or missing
@@ -41,14 +41,14 @@ boxes or question marks:
 
 ## No syntax highlighting
 
-Make sure `termguicolors` is enabled (line 42 in `init.lua`) and your terminal
+Make sure `termguicolors` is enabled (line 72 in `init.lua`) and your terminal
 supports 24-bit color. Most modern terminals do — check your terminal's
 settings if colors look wrong.
 
 ## Error: "vim.pack.add is nil" or plugins don't load
 
-You're running Neovim < 0.11. The starter config requires Neovim 0.11 or newer
-for the built-in plugin manager. Update or use the AppImage:
+You're running Neovim < 0.12. The starter config requires Neovim 0.12 or newer
+for the built-in plugin manager and native treesitter. Update or use the AppImage:
 
 ```bash
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage

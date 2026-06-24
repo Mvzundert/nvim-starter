@@ -1,18 +1,19 @@
 # Starter Neovim Config
 
 A single-file, beginner-friendly Neovim setup with 10 plugins, sensible defaults,
-and a curated set of keybindings to get productive quickly.
+thoroughly commented code, and a curated set of keybindings to get productive quickly.
 
 **What this gives you:**
 
 | You get | Provided by |
 |---|---|
-| Dark colorscheme (tokyonight moon) | tokyonight.nvim |
+| Dark colorscheme (tokyonight) | tokyonight.nvim |
 | Keymap cheat sheet — press `<Space>` and wait | which-key.nvim |
 | Fuzzy file finder, text search, terminal | snacks.nvim |
 | Language server installer (GUI) | mason.nvim |
 | Go-to-definition, hover docs, rename, diagnostics | nvim-lspconfig |
 | Auto-completion + snippet expansion | blink.cmp + LuaSnip |
+| Function signature help while typing | blink.cmp (signature) |
 | Git change markers in the gutter | gitsigns.nvim |
 | Auto-detect project indentation | guess-indent.nvim |
 | Better syntax highlighting (C, Lua, Markdown, …) | built-in treesitter |
@@ -86,9 +87,16 @@ nvim hello.py
 2. **tokyonight colorscheme applies.** Dark background, syntax highlighting.
 3. **which-key is active.** Tap `<Space>` and wait half a second — a menu of
    available keybindings appears.
+4. **LuaSnip compiles its regex engine.** A one-time build step runs after install.
+   You won't notice it — it's silent unless it fails.
 
 If plugins fail to install, check that `git` is available and you have a working
 internet connection.
+
+**Your first two keybindings to learn:**
+
+- `<Space>sh` — search help (`:help` is your best friend in Neovim)
+- `<Space>sk` — list every keybinding and what it does
 
 ---
 
@@ -136,6 +144,9 @@ See [Language Servers](docs/lsp-servers.md) for a full list of recommended serve
 |---|---|
 | `<Space>sf` | Search files by name |
 | `<Space>sg` | Search files by content (grep) |
+| `<Space>sh` | Search help (`:help` pages) |
+| `<Space>sk` | List all keybindings |
+| `<Space>s.` | Recent files (reopen something you closed) |
 
 ### Buffers (`<Space> b...`)
 
@@ -157,6 +168,7 @@ See [Language Servers](docs/lsp-servers.md) for a full list of recommended serve
 |---|---|
 | `<Space>cm` | Open Mason (install LSP servers) |
 | `<Space>tt` | Toggle terminal |
+| `<Esc><Esc>` | Exit terminal mode (while inside terminal) |
 
 ### LSP (active when a language server is attached)
 

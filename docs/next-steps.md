@@ -30,7 +30,7 @@ Neovim has an excellent help system. Try these:
 
 ## Read the config
 
-Open `init.lua` and read it top to bottom. It's 179 lines, all commented, and
+Open `init.lua` and read it top to bottom. It's 299 lines, all commented, and
 organized into numbered sections. Understanding your config means you can
 fix your own problems and add features without searching.
 

@@ -12,10 +12,10 @@ Add the plugin, call its setup function, then change the colorscheme name.
 Here's how you'd switch to catppuccin:
 
 ```lua
--- 1. Add to the vim.pack.add() list (near line 21 in init.lua):
+-- 1. Add to the vim.pack.add() list (near line 26 in init.lua):
 { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' }
 
--- 2. Add setup before the colorscheme line (near line 34):
+-- 2. Add setup before the colorscheme line (near line 51):
 require('catppuccin').setup({ flavour = 'mocha' })
 
 -- 3. Change the colorscheme call:

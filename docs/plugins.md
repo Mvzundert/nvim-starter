@@ -1,15 +1,15 @@
 # Popular Plugins
 
-Your starter config already has 8 plugins handling colorscheme, completion, LSP,
-fuzzy finding, and git signs. Here are other plugins the community loves — add
-them when you feel ready.
+Your starter config already has 10 plugins handling colorscheme, completion, LSP,
+fuzzy finding, git signs, snippet expansion, auto-indent, and signature help.
+Here are other plugins the community loves — add them when you feel ready.
 
 ---
 
 ## How to add a plugin
 
 Add the `{ src = '...', name = '...' }` entry to the `vim.pack.add()` list in
-`init.lua` (around line 21). Then add its setup call at the bottom of the file.
+`init.lua` (around line 26). Then add its setup call at the bottom of the file.
 
 Most plugins need a `require('...').setup()` line. Neovim auto-installs the
 plugin on next launch — no extra commands needed.
@@ -98,14 +98,22 @@ Setup varies by language — check each plugin's README for adapter configuratio
 ## Snippets
 
 Predefined code templates you expand while typing (e.g., type `for` and get a
-complete for-loop).
+complete for-loop), with tab stops to jump between placeholders.
 
-| Plugin | `vim.pack.add()` entry |
-|---|---|
-| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | `{ src = 'https://github.com/L3MON4D3/LuaSnip', name = 'LuaSnip' }` |
+The starter config already includes [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
+and [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) is a
+one-line add for hundreds of pre-made snippets:
 
-The starter config's blink.cmp already has `'snippets'` in its sources list and
-LuaSnip is included by default. Snippets appear automatically in completion.
+```lua
+-- Add to vim.pack.add():
+{ src = 'https://github.com/rafamadriz/friendly-snippets', name = 'friendly-snippets' },
+
+-- Then, after require('luasnip').setup {} (line 235):
+require('luasnip.loaders.from_vscode').lazy_load()
+```
+
+Snippets appear in the completion menu automatically — press `<Tab>` to expand
+them and `<Tab>`/`<S-Tab>` to jump through tab stops.
 
 ---
 

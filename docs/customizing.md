@@ -10,7 +10,7 @@ pointing you to the 3 most common changes. Start there.
 
 ## Change the colorscheme
 
-The colorscheme is set on line 49:
+The colorscheme is set on line 64:
 
 ```lua
 vim.cmd.colorscheme('tokyonight')
@@ -29,7 +29,7 @@ require('tokyonight').setup({ style = 'storm' })  -- 'night', 'day', 'moon'
 
 ## Change indent size
 
-Lines 59-60 control how wide indentation is:
+Lines 74-75 control how wide indentation is:
 
 ```lua
 vim.opt.shiftwidth = 4   -- indent width
@@ -67,7 +67,7 @@ projects to exclude `node_modules`, `.venv`, etc.
 
 ## Add LSP keybindings
 
-Section 10 (line 156) defines keymaps that activate when a language server
+Section 10 (line 191) defines keymaps that activate when a language server
 attaches. Add more inside the `map()` calls:
 
 ```lua
@@ -82,7 +82,7 @@ Every built-in LSP function is documented at `:help lsp-buf`.
 
 ## Add plugins
 
-Add entries to the `vim.pack.add()` list (line 23):
+Add entries to the `vim.pack.add()` list (line 26):
 
 ```lua
 { src = 'https://github.com/nvim-neo-tree/neo-tree.nvim', name = 'neo-tree.nvim' },
@@ -115,9 +115,10 @@ history but won't load.
 
 ## Understanding the file
 
-`init.lua` is organized in numbered sections (1 through 16). Each section starts
+`init.lua` is organized in numbered sections (0 through 16). Each section starts
 with a comment header and a brief explanation. The `vim.pack.add()` at the top
-tells Neovim to auto-clone and load plugins. Everything below it is options,
-keymaps, and plugin configuration — in that order.
+tells Neovim to auto-clone and load plugins. A `PackChanged` build hook compiles
+LuaSnip's regex engine after install. Everything below is options, keymaps, and
+plugin configuration — in that order.
 
-Read it top to bottom once. It's 265 lines of commented Lua.
+Read it top to bottom once. It's 299 lines of commented Lua — about 10 minutes.
