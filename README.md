@@ -1,6 +1,6 @@
 # Starter Neovim Config
 
-A single-file, beginner-friendly Neovim setup with 8 plugins, sensible defaults,
+A single-file, beginner-friendly Neovim setup with 10 plugins, sensible defaults,
 and a curated set of keybindings to get productive quickly.
 
 **What this gives you:**
@@ -12,8 +12,11 @@ and a curated set of keybindings to get productive quickly.
 | Fuzzy file finder, text search, terminal | snacks.nvim |
 | Language server installer (GUI) | mason.nvim |
 | Go-to-definition, hover docs, rename, diagnostics | nvim-lspconfig |
-| Auto-completion while you type | blink.cmp |
+| Auto-completion + snippet expansion | blink.cmp + LuaSnip |
 | Git change markers in the gutter | gitsigns.nvim |
+| Auto-detect project indentation | guess-indent.nvim |
+| Better syntax highlighting (C, Lua, Markdown, …) | built-in treesitter |
+| Format buffer via LSP | built-in LSP (`<leader>f`)
 
 Everything is in one file. Read it, understand it, then tweak it.
 
@@ -21,7 +24,7 @@ Everything is in one file. Read it, understand it, then tweak it.
 
 ## Prerequisites
 
-- **Neovim >= 0.11** — required for the built-in `vim.pack.add()` plugin manager
+- **Neovim >= 0.12** — required for built-in `vim.pack.add()` and native treesitter
 - **Git** — needed to clone plugins on first launch
 - **Nerd Font** (optional) — makes icons in which-key and gitsigns look right.
   [Download a Nerd Font](https://www.nerdfonts.com/) if you see missing glyphs.
@@ -118,6 +121,15 @@ See [Language Servers](docs/lsp-servers.md) for a full list of recommended serve
 | `jk` | Exit Insert mode (no reaching for `Esc`) |
 | `<Space>` | Hold, then wait for which-key to show all keybindings |
 
+### Window navigation
+
+| Keys | Action |
+|---|---|
+| `Ctrl-h` | Focus left window |
+| `Ctrl-l` | Focus right window |
+| `Ctrl-j` | Focus lower window |
+| `Ctrl-k` | Focus upper window |
+
 ### Fuzzy finder (`<Space> s...`)
 
 | Keys | Action |
@@ -131,12 +143,13 @@ See [Language Servers](docs/lsp-servers.md) for a full list of recommended serve
 |---|---|
 | `<Space>bb` | Browse open buffers |
 
-### File
+### File / format
 
 | Keys | Action |
 |---|---|
 | `<Space>w` | Save current file |
 | `<Space>q` | Close current buffer |
+| `<Space>f` | Format buffer (via LSP) |
 
 ### Tools (`<Space> c...` / `<Space> t...`)
 
